@@ -1,13 +1,11 @@
 package librato
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 )
 
@@ -28,10 +26,8 @@ func (p *publisher) run(harvestOn time.Duration) {
 	for {
 		select {
 		case <-ticker.C:
-			fmt.Println("ticker fired")
 			p.doHarvest()
 		case s := <-p.shutdown:
-			fmt.Println("shutdown fired")
 			ticker.Stop()
 			p.doHarvest()
 			close(s)
@@ -47,16 +43,15 @@ func (p *publisher) doHarvest() {
 	}
 
 	client := http.Client{}
-	r, w := io.Pipe()
 
+	// use a pipe to skip having to serialize to a temp buffer
+	r, w := io.Pipe()
 	go func() {
 		defer w.Close()
 		json.NewEncoder(w).Encode(measures)
 	}()
 
-	buf := &bytes.Buffer{}
-	tee := io.TeeReader(r, buf)
-	req, _ := http.NewRequest("POST", p.metricsURL.String(), tee)
+	req, _ := http.NewRequest("POST", p.metricsURL.String(), r)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
@@ -65,10 +60,7 @@ func (p *publisher) doHarvest() {
 		return
 	}
 
-	io.Copy(os.Stdout, buf)
-
 	defer resp.Body.Close()
-	fmt.Println(resp.Status)
 	if resp.StatusCode != 200 {
 		p.reportError(fmt.Errorf("an error occurred publishing metrics to librato : %v", resp.Status))
 	}

@@ -12,14 +12,13 @@ func newClient() *Librato {
 	config := Config{
 		Email:  os.Getenv("LIBRATO_EMAIL"),
 		APIKey: os.Getenv("LIBRATO_APIKEY"),
-		Errors: err,
 	}
 	go func() {
 		for e := range err {
 			fmt.Println(e)
 		}
 	}()
-	return New(config)
+	return New(config, err)
 }
 
 // The librato API
