@@ -40,7 +40,7 @@ func (a Aggregate) Sum() float64 {
 	return total
 }
 
-// Min is the minimum measurement value, or zero of no measurements exist.
+// Min is the minimum measurement value, or zero if no measurements exist.
 func (a Aggregate) Min() float64 {
 	if len(a.values) == 0 {
 		return 0
@@ -55,7 +55,7 @@ func (a Aggregate) Min() float64 {
 	return m
 }
 
-// Max is the maximum measurement value, or zero of no measurements exist.
+// Max is the maximum measurement value, or zero if no measurements exist.
 func (a Aggregate) Max() float64 {
 	if len(a.values) == 0 {
 		return 0
@@ -70,7 +70,7 @@ func (a Aggregate) Max() float64 {
 	return m
 }
 
-// SumSquares is
+// SumSquares is used to determine the standard deviation for the published measurements.
 func (a Aggregate) SumSquares() float64 {
 	if len(a.values) == 0 {
 		return 0
