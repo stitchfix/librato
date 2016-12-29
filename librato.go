@@ -1,3 +1,16 @@
+/*
+Package librato is a pure go client for publishing metrics to Librato.
+
+The package publishes metrics asynchronously, at a regular interval. If the package is unable to
+log metrics (network issues, service outage, or the app being overloaded), it will drop metrics instead of degrading the
+application's performance. The package allows some control over this behavior by allowing the developer the option of
+configuring the queue size. Once this queue size is exceeded, messages will be dropped until the publisher catches up.
+
+The package also provides an Aggregator struct which can be used to aggregate the gauge measurements on the client. For
+applications that need to log a substantial number of metrics, this will be preferable to publishing the individual metrics.
+
+
+*/
 package librato
 
 import (
