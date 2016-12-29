@@ -41,8 +41,8 @@ From Go:
   ```
 
 
-  Installation
-  -----------
+Installation
+----
 
   To install as a library, you can use `go get`:
 
