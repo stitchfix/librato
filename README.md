@@ -47,3 +47,9 @@ Installation
   To install as a library, you can use `go get`:
 
     go get github.com/stitchfix/librato
+
+Additional Documentation
+----
+For further documentation, please refer to godocs at
+
+[![GoDoc](https://godoc.org/github.com/stitchfix/librato?status.svg)](https://godoc.org/github.com/stitchfix/librato)
