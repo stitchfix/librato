@@ -114,6 +114,8 @@ type Gauge struct {
 	// The epoch time at which an individual measurement occurred with a maximum resolution of seconds.
 	MeasureTime int64 `json:"measure_time,omitempty"`
 
+	// The following fields are used to publish aggregations
+	// They are public to allow serialization, but should not be used directly.
 	Count      int         `json:"count,omitempty"`
 	Sum        interface{} `json:"sum,omitempty"`
 	Min        interface{} `json:"min,omitempty"`
