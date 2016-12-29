@@ -12,10 +12,10 @@ From Go:
 
   // Configure the authentication credentials
   // See struct docs for additional options
-	config := Config{
-		Email:  os.Getenv("LIBRATO_EMAIL"),
-		APIKey: os.Getenv("LIBRATO_APIKEY"),
-	}
+  config := Config{
+    Email:  os.Getenv("LIBRATO_EMAIL"),
+    APIKey: os.Getenv("LIBRATO_APIKEY"),
+  }
 
   // Create a new librato instance
   // Each instance publishes independently of others, and
@@ -23,15 +23,15 @@ From Go:
   l := librato.New(config)
 
   // Add a new gauge measurement.
-	l.AddGauge(Gauge{Name: "reticulated.splines", Value: 1, Source: "add-gauge"})
+  l.AddGauge(Gauge{Name: "reticulated.splines", Value: 1, Source: "add-gauge"})
 
   // add a new counter measurement
   l.AddCounter(Counter{Name: "reticulated.splines.counter", Value: 7, Source: "add-counter"})
 
   // Create and add an aggregate gauge
-	a := Aggregate{Name: "reticulated.splines", Source: "add-aggregate"}
-	a.Add(12).Add(6).Add(5).Add(4).Add(5).Add(10).Add(3)
-	l.AddGauge(a.ToGauge())
+  a := Aggregate{Name: "reticulated.splines", Source: "add-aggregate"}
+  a.Add(12).Add(6).Add(5).Add(4).Add(5).Add(10).Add(3)
+  l.AddGauge(a.ToGauge())
 
   // When done, call Shutdown().
   // This operation is synchronous and will wait for the last
